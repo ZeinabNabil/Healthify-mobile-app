@@ -5,6 +5,7 @@ import Nutration from '../components/Nutration/Nutration';
 import Meditation from '../components/Meditation/Meditation';
 import Workouts from '../components/Workouts/Workouts';
 import Login from '../components/SignInUp/Login';
+import MeditationNavigation from './MeditationNavigation';
 
 const Drawer = createDrawerNavigator();
 
@@ -13,7 +14,7 @@ const Root = () => {
     <Drawer.Navigator>
       <Drawer.Screen name={routes.home} component={Home} />
       <Drawer.Screen name={routes.nutration} component={Nutration} />
-      <Drawer.Screen name={routes.meditation} component={Meditation} />
+      <Drawer.Screen name={routes.meditation} component={MeditationNavigation} />
       <Drawer.Screen name={routes.workouts} component={Workouts} />
       <Drawer.Screen name={routes.login} component={Login} />
     </Drawer.Navigator>
