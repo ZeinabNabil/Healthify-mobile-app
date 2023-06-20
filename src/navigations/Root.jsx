@@ -6,7 +6,7 @@ import Workouts from "../components/Workouts/Workouts";
 import MeditationNavigation from "./MeditationNavigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import IonIcon from "react-native-vector-icons/Ionicons";
-import colors from "../common/colors";
+import styles from "../common/styles";
 import { View, Image, Text } from "react-native";
 import { useFonts, isLoaded } from "expo-font";
 import { useEffect } from "react";
@@ -14,10 +14,9 @@ import { useEffect } from "react";
 // const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
+
 function LogoTitle() {
-  const [fontsLoaded] = useFonts({
-    "WorkSans-Bold": require("../../assets/Fonts/WorkSans-Bold.ttf"),
-  });
+
   return (
     <View
       style={{
@@ -30,8 +29,8 @@ function LogoTitle() {
       <Text
         style={{
           fontSize: 22,
-          color: colors.mainColor,
-          // fontFamily: "WorkSans-Bold",
+          color: styles.mainColor,
+          fontFamily: styles.fontFamilyBold,
         }}
       >
         Healthify
@@ -58,11 +57,11 @@ const Root = () => {
           headerTitle: () => <LogoTitle />,
           tabBarLabel: "Home",
           // headerShown: false,
-          tabBarActiveTintColor: colors.mainColor,
+          tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
             fontSize: 11,
-            fontFamily: "WorkSans-Bold",
+            fontFamily: styles.fontFamilyBold,
           },
           tabBarIcon: ({ focused, color }) => {
             let iconName;
@@ -80,11 +79,11 @@ const Root = () => {
         options={{
           tabBarLabel: "Nutration",
           // headerShown: false,
-          tabBarActiveTintColor: colors.mainColor,
+          tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
             fontSize: 11,
-            // fontFamily: "WorkSans-Bold",
+            fontFamily: styles.fontFamilyBold,
           },
           tabBarIcon: ({ focused, color }) => {
             let iconName;
@@ -102,11 +101,11 @@ const Root = () => {
         options={{
           tabBarLabel: "Meditation",
           // headerShown: false,
-          tabBarActiveTintColor: colors.mainColor,
+          tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
             fontSize: 11,
-            // fontFamily: "WorkSans-Bold",
+            fontFamily: styles.fontFamilyBold,
           },
           tabBarIcon: ({ focused, color }) => {
             let iconName;
@@ -124,11 +123,11 @@ const Root = () => {
         options={{
           tabBarLabel: "Workouts",
           // headerShown: false,
-          tabBarActiveTintColor: colors.mainColor,
+          tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
             fontSize: 11,
-            // fontFamily: "WorkSans-Bold",
+            fontFamily: styles.fontFamilyBold,
           },
           tabBarIcon: ({ focused, color }) => {
             let iconName;
