@@ -1,10 +1,10 @@
 const routes = Object.freeze({
-  home: "home",
-  nutration: "nutration",
-  meditation: "meditation",
+  home: "Home",
+  nutration: "Nutration",
+  meditation: "Meditation",
   meditationDetails: "meditation-details",
-  workouts: "workouts",
-  login: "login",
+  workouts: "Workouts",
+  login: "Login",
 });
 
 export default routes;
