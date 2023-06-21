@@ -6,7 +6,8 @@ import { View } from "react-native";
 export default function App() {
   const [fontsLoaded] = useFonts({
     "WorkSans-Bold": require("./assets/Fonts/WorkSans-Bold.ttf"),
-    "WorkSans": require("./assets/Fonts/WorkSans-Regular.ttf"),
+    WorkSans: require("./assets/Fonts/WorkSans-Regular.ttf"),
+    "WorkSans-SemiBold": require("./assets/Fonts/WorkSans-SemiBold.ttf"),
   });
 
   return (

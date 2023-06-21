@@ -8,6 +8,7 @@ const colors = Object.freeze({
   header2Size: 18,
   fontFamilyReg: "WorkSans",
   fontFamilyBold: "WorkSans-Bold",
+  fontFamilySemiBold:"WorkSans-SemiBold",
   paddingHorizontal: 15,
   sectionPadding: 30,
   viewStyle: { padding: 15 },
