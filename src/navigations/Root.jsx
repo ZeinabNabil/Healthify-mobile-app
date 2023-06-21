@@ -14,9 +14,7 @@ import { useEffect } from "react";
 // const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-
 function LogoTitle() {
-
   return (
     <View
       style={{
@@ -61,7 +59,7 @@ const Root = () => {
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
             fontSize: 11,
-            fontFamily: styles.fontFamilyBold,
+            fontFamily: styles.fontFamilySemiBold,
           },
           tabBarIcon: ({ focused, color }) => {
             let iconName;
@@ -77,13 +75,14 @@ const Root = () => {
         name={routes.nutration}
         component={Nutration}
         options={{
+          headerTitle: () => <LogoTitle />,
           tabBarLabel: "Nutration",
           // headerShown: false,
           tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
             fontSize: 11,
-            fontFamily: styles.fontFamilyBold,
+            fontFamily: styles.fontFamilySemiBold,
           },
           tabBarIcon: ({ focused, color }) => {
             let iconName;
@@ -99,13 +98,14 @@ const Root = () => {
         name={routes.meditation}
         component={MeditationNavigation}
         options={{
+          headerTitle: () => <LogoTitle />,
           tabBarLabel: "Meditation",
           // headerShown: false,
           tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
             fontSize: 11,
-            fontFamily: styles.fontFamilyBold,
+            fontFamily: styles.fontFamilySemiBold,
           },
           tabBarIcon: ({ focused, color }) => {
             let iconName;
@@ -121,13 +121,13 @@ const Root = () => {
         name={routes.workouts}
         component={Workouts}
         options={{
-          tabBarLabel: "Workouts",
+          headerTitle: () => <LogoTitle />,
           // headerShown: false,
           tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
             fontSize: 11,
-            fontFamily: styles.fontFamilyBold,
+            fontFamily: styles.fontFamilySemiBold,
           },
           tabBarIcon: ({ focused, color }) => {
             let iconName;
