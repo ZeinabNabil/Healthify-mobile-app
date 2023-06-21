@@ -1,7 +1,12 @@
-import { Picker } from "@react-native-picker/picker";
-import style from "./MeditationStyle"
-import uuid from 'react-native-uuid';
 import { useState } from "react";
+import { Picker } from "@react-native-picker/picker";
+
+// Styles
+import style from "./MeditationStyle"
+
+// uuid
+import uuid from 'react-native-uuid';
+
 const Selection = ({title, titleValue, options}) => {
     const [selectedLanguage, setSelectedLanguage] = useState();
     return ( 

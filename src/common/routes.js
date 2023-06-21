@@ -3,7 +3,10 @@ const routes = Object.freeze({
   nutration: "Nutration",
   meditation: "Meditation",
   meditationDetails: "meditation-details",
+  workoutsDetails: "workouts-details",
   workouts: "Workouts",
+  fitness: "Fitness",
+  cardio: "Cardio",
   login: "Login",
 });
 

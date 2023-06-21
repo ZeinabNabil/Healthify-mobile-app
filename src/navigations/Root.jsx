@@ -10,36 +10,11 @@ import styles from "../common/styles";
 import { View, Image, Text } from "react-native";
 import { useFonts, isLoaded } from "expo-font";
 import { useEffect } from "react";
+import LogoTitle from "./LogoTitle";
+import WorkoutsNavigation from "./WorkoutsNavigation";
 
 // const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
-
-function LogoTitle() {
-  return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 22,
-          color: styles.mainColor,
-          fontFamily: styles.fontFamilyBold,
-        }}
-      >
-        Healthify
-      </Text>
-      <Image
-        style={{ width: 23, height: 23, paddingTop: 5, marginLeft: 2 }}
-        source={require("../../assets/Images/logo.png")}
-      />
-    </View>
-  );
-}
 
 const Root = () => {
   return (
@@ -95,12 +70,10 @@ const Root = () => {
         }}
       />
       <Tab.Screen
-        name={routes.meditation}
-        component={MeditationNavigation}
+        name="meditation"
         options={{
-          headerTitle: () => <LogoTitle />,
+          headerShown:false,
           tabBarLabel: "Meditation",
-          // headerShown: false,
           tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
@@ -116,13 +89,13 @@ const Root = () => {
             paddingTop: 3,
           },
         }}
-      />
+      >
+        {()=><MeditationNavigation />}
+      </Tab.Screen>
       <Tab.Screen
-        name={routes.workouts}
-        component={Workouts}
+        name="workouts"
         options={{
-          headerTitle: () => <LogoTitle />,
-          // headerShown: false,
+          headerShown: false,
           tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
           tabBarLabelStyle: {
@@ -138,7 +111,9 @@ const Root = () => {
             paddingTop: 3,
           },
         }}
-      />
+      >
+        {()=><WorkoutsNavigation />}
+      </Tab.Screen>
       {/* <Tab.Screen
         name={routes.nutration}
         component={Nutration}

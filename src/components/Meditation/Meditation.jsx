@@ -1,18 +1,16 @@
+import { Text, View, Dimensions, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable } from "react-native";
-import { Text } from "react-native";
-import { View } from "react-native";
-import routes from "../../common/routes";
-import styles from "../../common/styles";
-import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
+
+// Styles
+import styles from "../../common/styles";
 import style from "./MeditationStyle";
-import { ScrollView } from "react-native";
-import { Image } from "react-native";
-import { Dimensions } from "react-native";
-import { FlatList } from "react-native";
-import Selection from "./Selection";
+
+// uuid
 import uuid from 'react-native-uuid';
+
+// Components
+import Selection from "./Selection";
 import MeditationCard from "./MeditationCard";
 
 const Meditation = () => {
@@ -26,14 +24,14 @@ const Meditation = () => {
         <Text style={style.headerStyle}>Filter</Text>
         <Selection title="Meditation Type" titleValue="meditation-type" options={[{value: "1", label:"1"}, {value: "2", label:"2"}, {value: "3", label:"3"}]} />
         <Selection title="Instructor" titleValue="instructor" options={[{value: "1", label:"1"}, {value: "2", label:"2"}, {value: "3", label:"3"}]} />
-        <Pressable
+        {/* <Pressable
           style={style.btnStyle}
           onPress={() => {
             navigate(routes.meditationDetails);
           }}
         >
           <Text style={style.btnText}>Apply</Text>
-        </Pressable>
+        </Pressable> */}
       </View>
       <View style={style.resultsTextView}>
         <Text style={{ fontSize: 18, color: styles.backgroundPrimaryColor }}>
@@ -41,6 +39,7 @@ const Meditation = () => {
         </Text>
       </View>
       <FlatList
+      showsHorizontalScrollIndicator={false}
         horizontal
         data={data}
         renderItem={({ item }) => (

@@ -4,7 +4,7 @@ import styles from "../../../common/styles";
 export default StyleSheet.create({
   viewStyle: styles.viewStyle,
   headerStyle: {
-    fontFamily: styles.fontFamilyReg,
+    fontFamily: styles.fontFamilySemiBold,
     fontSize: 18,
   },
   imgStyle: {
