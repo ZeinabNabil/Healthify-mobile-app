@@ -1,16 +1,26 @@
-import { ScrollView } from "react-native";
-import { Text } from "react-native";
-import { View } from "react-native";
-import style from "./MedDetailsStyle";
-import { Image } from "react-native";
-import { Dimensions } from "react-native";
-import IonIcon from "react-native-vector-icons/Ionicons";
-import { Pressable } from "react-native";
-import styles from "../../../common/styles";
+import {
+  ScrollView,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  Pressable,
+  FlatList,
+} from "react-native";
 import { useState } from "react";
+
+// Styles
+import style from "./MedDetailsStyle";
+import styles from "../../../common/styles";
+
+// Icons
+import IonIcon from "react-native-vector-icons/Ionicons";
+
+// uuid
+import uuid from "react-native-uuid";
+
+// Components
 import MeditationCard from "../MeditationCard";
-import { FlatList } from "react-native";
-import uuid from 'react-native-uuid';
 
 const MeditationDetails = () => {
   const w = Dimensions.get("window").width;
@@ -52,15 +62,16 @@ const MeditationDetails = () => {
     },
   ];
   return (
-    <ScrollView style={style.viewStyle}>
+    <ScrollView style={style.viewStyle} showsVerticalScrollIndicator={false}>
       <Text style={style.headerStyle}>Meditative Rest and Sleep Magic</Text>
       <Image
         style={{ width: w - 30, ...style.imgStyle }}
-        source={require("../../../../assets/Images/meditaion2.jpg")}
+        source={require("../../../../assets/Images/meditaion2.webp")}
       ></Image>
       <View>
         {btns.map((btn) => (
           <Pressable
+            key={uuid.v4()}
             onPress={() => handleBtnsAction(btn.name.toLowerCase())}
             style={{
               borderWidth: 1,
@@ -90,7 +101,7 @@ const MeditationDetails = () => {
           </Pressable>
         ))}
       </View>
-      <Text style={{fontSize:15, marginTop:15}}>
+      <Text style={{ fontSize: 15, marginTop: 15 }}>
         Restful Intuition This practice is a form of intuitive strength training
         and supports clearing overwhelmed sensory pathways, while you rest. It
         can be used any time, day or night. It will invite you to explore your
@@ -98,15 +109,20 @@ const MeditationDetails = () => {
         feeling, and inter-connectivity. *Please note the introduction ends at
         4:02, and there is a 45-second pause between each intuitive portal.*
       </Text>
-      <Text style={{...style.headerStyle, textAlign: "center", marginTop:25}}>Another Meditations</Text>
+      <Text
+        style={{ ...style.headerStyle, textAlign: "center", marginTop: 25 }}
+      >
+        Another Meditations
+      </Text>
       <FlatList
-      showsHorizontalScrollIndicator={false}
+        style={{ marginLeft: -8 }}
+        showsHorizontalScrollIndicator={false}
         horizontal
         data={data}
         renderItem={({ item }) => (
           <MeditationCard imgWidth={200} imgHeight={150} />
         )}
-        keyExtractor={(data)=>uuid.v4()}
+        keyExtractor={(data) => uuid.v4()}
       ></FlatList>
     </ScrollView>
   );
