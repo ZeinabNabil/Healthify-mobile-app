@@ -14,6 +14,10 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.6)",
   },
+  child2: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.4)",
+  },
   container: {
     display: "flex",
     justifyContent: "center",
@@ -47,5 +51,26 @@ export default StyleSheet.create({
     fontSize: 28,
     fontFamily: styles.fontFamilySemiBold,
     color: styles.paragraphColor,
+  },
+  NutrationText: {
+    textAlign: "center",
+    fontFamily: styles.fontFamilyReg,
+    fontSize: 18,
+    marginVertical: 10,
+  },
+  Card: {
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 15,
+  },
+  input: {
+    height: 40,
+    marginVertical: 10,
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: styles.paragraphColor,
   },
 });
