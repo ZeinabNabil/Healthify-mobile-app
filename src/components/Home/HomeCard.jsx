@@ -7,7 +7,7 @@ import { View } from "react-native";
 const HomeCard = ({ img, title, slogan }) => {
   const w = Dimensions.get("window").width;
   return (
-    <View style={{ marginHorizontal: 20, marginBottom: 50 }}>
+    <View style={{ marginHorizontal: 20, marginBottom: 20 }}>
       <Image
         style={{
           width: w - 40,
