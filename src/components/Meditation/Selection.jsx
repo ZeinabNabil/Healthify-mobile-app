@@ -24,6 +24,10 @@ const Selection = ({title, titleValue, options, onChanged}) => {
             label={title}
             value={titleValue}
           />
+          {titleValue==="instructor"&&<Picker.Item
+            label="all"
+            value="All"
+          />}
           {options.map((option)=><Picker.Item key={uuid.v4()} label={option.name} value={option.name} />)}
         </Picker>
      );

@@ -24,8 +24,12 @@ const Meditation = () => {
   useEffect(() => {
     dispatch(getInstructors());
     dispatch(getTypes());
-    setFilterdInst(instructors?.slice(1, instructors.length));
+    // setFilterdInst(instructors?.slice(1, instructors.length));
   }, []);
+
+  useEffect(()=>{
+    setFilterdInst(instructors?.slice(1, instructors.length));
+  },[instructors])
 
   const onInstructorChanged = (itemValue) => {
     if (itemValue === "All") {

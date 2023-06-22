@@ -7,7 +7,7 @@ import {
   Pressable,
   FlatList,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Styles
 import style from "./MedDetailsStyle";
@@ -21,8 +21,30 @@ import uuid from "react-native-uuid";
 
 // Components
 import MeditationCard from "../MeditationCard";
+import { useDispatch, useSelector } from "react-redux";
+import { useRoute } from "@react-navigation/core";
+import axios from "axios";
+import { getTypes } from "../../../redux/meditationSlice";
 
 const MeditationDetails = () => {
+  const [artDetails, setArtDetails] = useState();
+  const {params}=useRoute();
+  const { types, isLoading, error } = useSelector((state) => state.meditation);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchData = () => {
+      axios
+        .get(`http://localhost:3002/articles/${params.id}`)
+        .then(function (response) {
+          setArtDetails(response.data);
+        });
+    };
+    fetchData();
+  }, [params.id]);
+
+  useEffect(() => {
+    dispatch(getTypes());
+  }, []);
   const w = Dimensions.get("window").width;
   const [btnsAction, setBtnsAction] = useState({
     save: false,
@@ -62,11 +84,12 @@ const MeditationDetails = () => {
     },
   ];
   return (
-    <ScrollView style={style.viewStyle} showsVerticalScrollIndicator={false}>
-      <Text style={style.headerStyle}>Meditative Rest and Sleep Magic</Text>
+    <>
+    {isLoading?<View><Text>Loading...</Text></View>:error?<View><Text>{error}</Text></View>:types?<ScrollView style={style.viewStyle} showsVerticalScrollIndicator={false}>
+      <Text style={style.headerStyle}>{artDetails?.title}</Text>
       <Image
         style={{ width: w - 30, ...style.imgStyle }}
-        source={require("../../../../assets/Images/meditaion2.webp")}
+        source={{uri: artDetails?.poster}}
       ></Image>
       <View>
         {btns.map((btn) => (
@@ -101,13 +124,11 @@ const MeditationDetails = () => {
           </Pressable>
         ))}
       </View>
-      <Text style={{ fontSize: 15, marginTop: 15 }}>
-        Restful Intuition This practice is a form of intuitive strength training
-        and supports clearing overwhelmed sensory pathways, while you rest. It
-        can be used any time, day or night. It will invite you to explore your
-        intuitive gut, heart and sense of taste, smell, vision, hearing,
-        feeling, and inter-connectivity. *Please note the introduction ends at
-        4:02, and there is a 45-second pause between each intuitive portal.*
+      <Text style={{ fontSize: 15, marginTop: 15, fontFamily:styles.fontFamilyReg }}>
+      {artDetails?.description}
+      </Text>
+      <Text style={{ fontSize: 15, marginTop: 15, fontFamily:styles.fontFamilySemiBold }}>
+      Instructor: <Text style={{color:styles.mainColor}}>({artDetails?.author})</Text>
       </Text>
       <Text
         style={{ ...style.headerStyle, textAlign: "center", marginTop: 25 }}
@@ -118,13 +139,20 @@ const MeditationDetails = () => {
         style={{ marginLeft: -8 }}
         showsHorizontalScrollIndicator={false}
         horizontal
-        data={data}
+        data={types?.length &&
+          types.map((item) =>
+            item.articles)}
         renderItem={({ item }) => (
-          <MeditationCard imgWidth={200} imgHeight={150} />
+          item.filter((i)=>i.id !== params.id).slice(0,5).map((i)=>(<MeditationCard imgWidth={200} imgHeight={150} id={i.id}
+            title={i.title}
+            description={i.description}
+            poster={i.poster}
+            author={i.author} />))
         )}
         keyExtractor={(data) => uuid.v4()}
       ></FlatList>
-    </ScrollView>
+    </ScrollView>:<View></View>}
+    </>
   );
 };
 

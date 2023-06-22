@@ -7,13 +7,13 @@ import styles from "../../common/styles";
 // Routes
 import routes from "../../common/routes";
 
-const MeditationCard = ({ imgWidth, imgHeight, title, author, poster }) => {
+const MeditationCard = ({ imgWidth, imgHeight, id, title, author, poster }) => {
   const { navigate } = useNavigation();
   const w = Dimensions.get("window").width;
   return (
     <Pressable
       onPress={() => {
-        navigate(routes.meditationDetails);
+        navigate(routes.meditationDetails,{id:id});
       }}
       style={{
         paddingLeft: imgWidth ? 8 : 15,
