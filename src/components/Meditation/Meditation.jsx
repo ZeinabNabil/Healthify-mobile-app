@@ -81,7 +81,7 @@ const Meditation = () => {
             item.articles)}
         renderItem={({ item }) => (
           // console.warn(item)
-          item.map((i)=>(<MeditationCard id={i.id}
+          item.map((i)=>(<MeditationCard key={i.id} id={i.id}
             title={i.title}
             description={i.description}
             poster={i.poster}
