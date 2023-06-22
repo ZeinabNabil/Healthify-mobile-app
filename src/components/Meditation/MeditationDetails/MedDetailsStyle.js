@@ -8,7 +8,7 @@ export default StyleSheet.create({
     fontSize: 18,
   },
   imgStyle: {
-    height: 200,
+    height: 300,
     marginVertical: 15,
   },
 });

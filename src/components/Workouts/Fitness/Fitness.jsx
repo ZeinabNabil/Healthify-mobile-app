@@ -49,14 +49,14 @@ const Fitness = () => {
                 >
                   <Video
                     source={require("../../../../assets/videos/gym.mp4")}
-                    style={{ height: 300, position: "absollute", zIndex: 5 }}
+                    style={{ height: 300, zIndex: 5 }}
                     // useNativeControls
                     resizeMode={ResizeMode.COVER}
                     shouldPlay
                     isMuted
                     isLooping
                     // onPlaybackStatusUpdate={status => setStatus(() => status)}
-                  ></Video>
+                  />
                   <View
                     style={{
                       position: "absolute",

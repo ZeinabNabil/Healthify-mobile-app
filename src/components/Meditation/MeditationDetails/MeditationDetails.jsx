@@ -30,11 +30,12 @@ const MeditationDetails = () => {
   const [artDetails, setArtDetails] = useState();
   const {params}=useRoute();
   const { types, isLoading, error } = useSelector((state) => state.meditation);
+  let randomNum = Math.floor(Math.random());
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(`http://localhost:3002/articles/${params.id}`)
+        .get(`http://192.168.56.1:3001/articles/${params.id}`)
         .then(function (response) {
           setArtDetails(response.data);
         });
@@ -135,7 +136,16 @@ const MeditationDetails = () => {
       >
         Another Meditations
       </Text>
-      <FlatList
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{marginBottom:15}}>
+        {types?.length &&
+              types.map((item) =>
+                item.articles?.filter((i)=>i.id !== params.id).slice(0,5).map((i)=>(<MeditationCard key={i.id} imgWidth={200} imgHeight={150} id={i.id}
+            title={i.title}
+            description={i.description}
+            poster={i.poster}
+            author={i.author} />)))}
+      </ScrollView>
+      {/* <FlatList
         style={{ marginLeft: -8 }}
         showsHorizontalScrollIndicator={false}
         horizontal
@@ -143,14 +153,14 @@ const MeditationDetails = () => {
           types.map((item) =>
             item.articles)}
         renderItem={({ item }) => (
-          item.filter((i)=>i.id !== params.id).slice(0,5).map((i)=>(<MeditationCard imgWidth={200} imgHeight={150} id={i.id}
+          item.filter((i)=>i.id !== params.id).slice(0,5).map((i)=>(<MeditationCard key={i.id} imgWidth={200} imgHeight={150} id={i.id}
             title={i.title}
             description={i.description}
             poster={i.poster}
             author={i.author} />))
         )}
         keyExtractor={(data) => uuid.v4()}
-      ></FlatList>
+      ></FlatList> */}
     </ScrollView>:<View></View>}
     </>
   );
