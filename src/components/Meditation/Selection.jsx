@@ -7,21 +7,24 @@ import style from "./MeditationStyle"
 // uuid
 import uuid from 'react-native-uuid';
 
-const Selection = ({title, titleValue, options}) => {
+const Selection = ({title, titleValue, options, onChanged}) => {
     const [selectedLanguage, setSelectedLanguage] = useState();
     return ( 
         <Picker
         //   mode="dropdown"
           style={style.pickerStyle}
-          selectedValue={selectedLanguage}
-          onValueChange={(itemValue) => setSelectedLanguage(itemValue)}
+          selectedValue={titleValue}
+          // selectedValue={selectedLanguage}
+          onValueChange={(itemValue, itemIndex) =>
+            onChanged(itemValue)
+        }
         >
           <Picker.Item
             enabled={false}
             label={title}
             value={titleValue}
           />
-          {options.map((option)=><Picker.Item key={uuid.v4()} label={option.label} value={option.value} />)}
+          {options.map((option)=><Picker.Item key={uuid.v4()} label={option.name} value={option.name} />)}
         </Picker>
      );
 }

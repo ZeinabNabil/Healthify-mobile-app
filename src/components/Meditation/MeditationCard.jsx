@@ -7,7 +7,7 @@ import styles from "../../common/styles";
 // Routes
 import routes from "../../common/routes";
 
-const MeditationCard = ({ imgWidth, imgHeight }) => {
+const MeditationCard = ({ imgWidth, imgHeight, title, author, poster }) => {
   const { navigate } = useNavigation();
   const w = Dimensions.get("window").width;
   return (
@@ -19,7 +19,7 @@ const MeditationCard = ({ imgWidth, imgHeight }) => {
         paddingLeft: imgWidth ? 8 : 15,
         paddingRight: imgWidth ? 0 : 15,
         paddingVertical: 15,
-        marginBottom: 15,
+        // marginBottom: 15,
       }}
     >
       <Image
@@ -27,7 +27,7 @@ const MeditationCard = ({ imgWidth, imgHeight }) => {
           width: imgWidth ? imgWidth : w - 30,
           height: imgHeight ? imgHeight : 250,
         }}
-        source={require("../../../assets/Images/meditaion2.webp")}
+        source={{uri: poster}}
       ></Image>
       <Text
         style={{
@@ -37,7 +37,7 @@ const MeditationCard = ({ imgWidth, imgHeight }) => {
           fontFamily: styles.fontFamilySemiBold,
         }}
       >
-        Yoga meditation for sleep
+        {title}
       </Text>
       <Text
         style={{
@@ -47,7 +47,7 @@ const MeditationCard = ({ imgWidth, imgHeight }) => {
           fontFamily: styles.fontFamilyReg,
         }}
       >
-        Devid Procyshyn
+        {author}
       </Text>
     </Pressable>
   );
