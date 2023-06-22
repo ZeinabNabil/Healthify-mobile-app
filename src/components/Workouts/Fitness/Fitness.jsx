@@ -1,7 +1,6 @@
 import { Text, View } from "react-native";
 import fitnessVid from "../../../../assets/videos/gym.mp4";
 import { ImageBackground } from "react-native";
-import Video from "react-native-video";
 import { ScrollView } from "react-native";
 import { Dimensions } from "react-native";
 import styles from "../../../common/styles";

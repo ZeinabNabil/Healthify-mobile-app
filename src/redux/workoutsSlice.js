@@ -15,7 +15,6 @@ export const getWorkoutByID = createAsyncThunk(
           "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
         },
       });
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -36,7 +35,6 @@ export const getAllWorkouts = createAsyncThunk(
           "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
         },
       });
-      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
