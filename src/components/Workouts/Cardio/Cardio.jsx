@@ -11,6 +11,7 @@ import { Dimensions } from "react-native";
 import styles from "../../../common/styles";
 import routes from "../../../common/routes";
 import { ResizeMode, Video } from "expo-av";
+import FitnessCardioCard from "../FitnessCardioCard";
 
 const Cardio = () => {
   const { cardios, isLoading, error } = useSelector((state) => state.workouts);
@@ -74,7 +75,17 @@ const Cardio = () => {
                         fontFamily: styles.fontFamilyBold,
                       }}
                     >
-                      Cardio Workout
+                      Cardio Workouts
+                    </Text>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontSize: 15,
+                        fontFamily: styles.fontFamilyReg,
+                        marginTop:8
+                      }}
+                    >
+                      Fall in love with cardio
                     </Text>
                   </View>
                 </View>
@@ -93,40 +104,8 @@ const Cardio = () => {
             showsVerticalScrollIndicator={false}
             data={cardios}
             renderItem={({ item }) => (
-              <View style={{ paddingHorizontal: 15 }}>
-                <Pressable
-                  onPress={() => {
-                    navigate(routes.workoutsDetails, { id: item.id });
-                  }}
-                  style={{
-                    marginBottom: 15,
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    backgroundColor: "white",
-                  }}
-                >
-                  <Image
-                    style={{
-                      width: w - 32,
-                      height: 320,
-                      borderTopRightRadius: 10,
-                      borderTopLeftRadius: 10,
-                    }}
-                    source={{ uri: item.gifUrl }}
-                  ></Image>
-                  <Text
-                    style={{
-                      color: styles.mainColor,
-                      fontSize: 18,
-                      fontFamily: styles.fontFamilySemiBold,
-                      borderTopWidth: 1,
-                      padding: 10,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                </Pressable>
-              </View>
+            <FitnessCardioCard width={w} id={item.id} img={item.gifUrl} name={item.name} equipment={item.equipment} bodyPart={item.bodyPart} target={item.target}/>
+              
             )}
             keyExtractor={(fitness) => fitness.id}
           ></FlatList>

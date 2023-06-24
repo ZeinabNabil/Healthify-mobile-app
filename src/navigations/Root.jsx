@@ -70,7 +70,7 @@ const Root = () => {
         }}
       />
       <Tab.Screen
-        name="meditation"
+        name={routes.meditationStack}
         options={{
           headerShown:false,
           tabBarLabel: "Meditation",
@@ -93,7 +93,7 @@ const Root = () => {
         {()=><MeditationNavigation />}
       </Tab.Screen>
       <Tab.Screen
-        name="workouts"
+        name={routes.workoutsStack}
         options={{
           headerShown: false,
           tabBarActiveTintColor: styles.mainColor,

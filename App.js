@@ -1,9 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native";
 import Root from "./src/navigations/Root";
+import Login from "./src/components/SignInUp/Login";
 import { useFonts } from "expo-font";
 import { View } from "react-native";
 import { Provider } from "react-redux";
 import store from "./src/redux/store";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import LoginNavigation from "./src/navigations/LoginNavigation";
+import LogoTitle from "./src/navigations/LogoTitle";
+import routes from "./src/common/routes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -12,10 +17,33 @@ export default function App() {
     "WorkSans-SemiBold": require("./assets/Fonts/WorkSans-SemiBold.ttf"),
   });
 
+  const Drawer = createDrawerNavigator();
+
   return (
     // <Provider store={store}>
     <Provider store={store}>
-      <NavigationContainer>{fontsLoaded && <Root></Root>}</NavigationContainer>
+      <NavigationContainer>
+        {
+          fontsLoaded && (
+            <Drawer.Navigator>
+              <Drawer.Screen
+                options={{ headerShown: false }}
+                name={routes.homeBottomTab}
+                component={Root}
+              />
+              <Drawer.Screen
+                options={{
+                  headerShown: false,
+                  // headerTitle: () => <LogoTitle />,
+                }}
+                name={routes.loginDrawer}
+                component={LoginNavigation}
+              />
+            </Drawer.Navigator>
+          )
+          // <Root></Root>
+        }
+      </NavigationContainer>
     </Provider>
   );
 }

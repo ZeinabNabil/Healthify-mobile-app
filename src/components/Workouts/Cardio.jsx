@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllWorkouts } from "../../redux/workoutsSlice";
 
-const Cardio = ({ data }) => {
+const Cardio = () => {
     const { cardios, isLoading, error } = useSelector((state) => state.workouts);
   const dispatch = useDispatch();
 
@@ -77,7 +77,7 @@ const Cardio = ({ data }) => {
               <Image
                 style={{
                   width: w - 72,
-                  height: 250,
+                  height: 350,
                   borderTopRightRadius: 10,
                   borderTopLeftRadius: 10,
                 }}
