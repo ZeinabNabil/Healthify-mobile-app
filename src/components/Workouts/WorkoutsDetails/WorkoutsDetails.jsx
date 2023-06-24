@@ -26,6 +26,8 @@ import { getAllWorkouts, getWorkoutByID } from "../../../redux/workoutsSlice";
 import WorkDetailsCard from "./WorkDetailsCard";
   
   const WorkoutsDetails = () => {
+    let randomFitness = Math.floor(Math.random() * 19);
+  let randomCardio = Math.floor(Math.random() * 10);
     const {params}=useRoute();
     const { workout, cardios, fitnesses, isLoading, error } = useSelector(
         (state) => state.workouts
@@ -126,7 +128,32 @@ import WorkDetailsCard from "./WorkDetailsCard";
         >
           Another Workouts
         </Text>
-        {workout.bodyPart ==="cardio" && cardios?<FlatList
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{marginVertical:15}}>
+        {workout.bodyPart === "cardio" && cardios
+                  ? cardios
+                      .filter(
+                        (cardio) =>
+                          // cardio.equipment === "body weight" &&
+                           cardio.id !== params.id
+                      )
+                      .slice(randomCardio, randomCardio+3)
+                      .map((cardio) => (
+                        <WorkDetailsCard key={cardio.id} imgWidth={200} imgHeight={200} id={cardio.id} name={cardio.name} img={cardio.gifUrl} another={cardio.equipment} />
+                      ))
+                  : fitnesses
+                  ? fitnesses
+                      .filter(
+                        (fitness) =>
+                          // fitness.bodyPart === workout.bodyPart &&
+                          fitness.id !== params.id
+                      )
+                      .slice(randomFitness, randomFitness+5)
+                      .map((fitness) => (
+                        <WorkDetailsCard key={fitness.id} imgWidth={200} imgHeight={200} id={fitness.id} name={fitness.name} img={fitness.gifUrl} another={fitness.equipment} />
+                      ))
+                  : <View></View>}
+      </ScrollView>
+        {/* {workout.bodyPart ==="cardio" && cardios?<FlatList
           style={{ marginLeft: -8 }}
           showsHorizontalScrollIndicator={false}
           horizontal
@@ -155,7 +182,7 @@ import WorkDetailsCard from "./WorkDetailsCard";
           <WorkDetailsCard imgWidth={200} imgHeight={200} id={item.id} name={item.name} img={item.gifUrl} another={item.equipment} />
         )}
         keyExtractor={(key) => key.id}
-      ></FlatList>:<View></View>}
+      ></FlatList>:<View></View>} */}
       </ScrollView>:<View></View>}
       </>
     );

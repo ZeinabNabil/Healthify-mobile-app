@@ -6,15 +6,9 @@ export const getWorkoutByID = createAsyncThunk(
   async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const { data } = await axios.request({
-        method: "GET",
-        url: `https://exercisedb.p.rapidapi.com/exercises/exercise/${id}`,
-        headers: {
-          "X-RapidAPI-Key":
-            "3fac336321msh22cdbdc849eab37p174f51jsn630ea4fb7fc2",
-          "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-        },
-      });
+      const { data } = await axios.get(
+        `http://192.168.56.1:3001/exercises/${id}`
+      );
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -26,15 +20,7 @@ export const getAllWorkouts = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const { data } = await axios.request({
-        method: "GET",
-        url: "https://exercisedb.p.rapidapi.com/exercises",
-        headers: {
-          "X-RapidAPI-Key":
-            "3fac336321msh22cdbdc849eab37p174f51jsn630ea4fb7fc2",
-          "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-        },
-      });
+      const { data } = await axios.get("http://192.168.56.1:3001/exercises");
       return data;
     } catch (error) {
       return rejectWithValue(error.message);

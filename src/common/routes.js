@@ -13,6 +13,12 @@ const routes = Object.freeze({
   loginDrawer: "Login",
   login: "login",
   signup: "Signup",
+  settings: "Settings",
+  editProfile: "Edit",
+  notifications: "Notific",
+  bmiTest: "BMI",
+  languages: "Lang",
+  help: "Help",
 });
 
 export default routes;

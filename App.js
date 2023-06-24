@@ -9,6 +9,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import LoginNavigation from "./src/navigations/LoginNavigation";
 import LogoTitle from "./src/navigations/LogoTitle";
 import routes from "./src/common/routes";
+import SettingsNavigation from "./src/navigations/SettingsNavigation";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -38,6 +39,14 @@ export default function App() {
                 }}
                 name={routes.loginDrawer}
                 component={LoginNavigation}
+              />
+              <Drawer.Screen
+                options={{
+                  // headerShown: false,
+                  headerTitle: () => <LogoTitle />,
+                }}
+                name={routes.settings}
+                component={SettingsNavigation}
               />
             </Drawer.Navigator>
           )
