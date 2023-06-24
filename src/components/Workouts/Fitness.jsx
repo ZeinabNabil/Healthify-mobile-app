@@ -80,7 +80,7 @@ const Fitness = () => {
               <Image
                 style={{
                   width: w - 72,
-                  height: 250,
+                  height: 350,
                   borderTopRightRadius: 10,
                   borderTopLeftRadius: 10,
                 }}
