@@ -13,10 +13,13 @@ import { ScrollView } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
+// import { useAuth } from "../../Context/AuthContext";
 
 const Signup = ({ navigation }) => {
   const gender = ["Male", "Female"];
   const [error, setError] = useState("");
+  // const { login, googleSignIn, facebookSignIn, currentUser, t, signup } =
+  //   useAuth();
 
   const {
     control,
@@ -186,21 +189,8 @@ const Signup = ({ navigation }) => {
                 render={({ field: { onChange, value } }) => (
                     <SelectDropdown
                     data={gender}
-                    buttonStyle={{
-                      borderWidth: 1,
-                      backgroundColor: "white",
-                      width: "100%",
-                      borderRadius: 5,
-                      paddingLeft: 15,
-                      height: 40,
-                      borderColor: styles.backgroundPrimaryColor,
-                    }}
-                    buttonTextStyle={{
-                      textAlign: "left",
-                      fontFamily: styles.fontFamilyReg,
-                      paddingLeft: 23,
-                      fontSize: 16,
-                    }}
+                    buttonStyle={style.selectStyle}
+                    buttonTextStyle={style.selectTextStyle}
                     defaultButtonText="Select gender"
                     dropdownIconPosition="right"
                     statusBarTranslucent

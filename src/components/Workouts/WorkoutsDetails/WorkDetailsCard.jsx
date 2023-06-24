@@ -16,10 +16,12 @@ const WorkDetailsCard = ({ imgWidth, imgHeight, id, name, img, another }) => {
         navigate(routes.workoutsDetails,{id:id});
       }}
       style={{
-        paddingLeft: imgWidth ? 8 : 15,
+        paddingLeft: imgWidth ? 0 : 15,
         paddingRight: imgWidth ? 0 : 15,
-        paddingVertical: 15,
-        marginBottom: 15,
+        paddingVertical: imgWidth?0:15,
+        width:imgWidth ? imgWidth : w - 30,
+        marginRight:imgWidth?15:0,
+        marginBottom: imgWidth?15:0,
       }}
     >
       <Image

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import styles from "../../common/styles";
+import styles from "../../../common/styles";
 
 export default StyleSheet.create({
   signInUpContainer: {
@@ -28,7 +28,12 @@ export default StyleSheet.create({
     width: "15%",
     backgroundColor: styles.mainColor,
   },
-  inputContainer: { marginTop: 15, position: "relative" },
+  inputContainer: { marginTop: 15 },
+  labelStyle: {
+    fontFamily: styles.fontFamilySemiBold,
+    fontSize: 18,
+    marginBottom: 10,
+  },
   inputStyle: {
     borderWidth: 1,
     borderColor: styles.backgroundPrimaryColor,
@@ -37,13 +42,7 @@ export default StyleSheet.create({
     paddingVertical: 5,
     fontSize: 16,
     fontFamily: styles.fontFamilyReg,
-    paddingLeft: 40,
-  },
-  inputIconStyle: {
-    position: "absolute",
-    top: "-50%",
-    transform: [{ translateY: 28 }],
-    left: 10,
+    backgroundColor: "white",
   },
   textLink: {
     fontFamily: styles.fontFamilySemiBold,
@@ -70,19 +69,4 @@ export default StyleSheet.create({
   textFont: { fontFamily: styles.fontFamilyReg },
   googleImg: { width: 22, height: 22, marginHorizontal: 5 },
   errorMsg: { color: "red", marginTop: 5, fontFamily: styles.fontFamilyReg },
-  selectStyle: {
-    borderWidth: 1,
-    backgroundColor: "white",
-    width: "100%",
-    borderRadius: 5,
-    paddingLeft: 15,
-    height: 40,
-    borderColor: styles.backgroundPrimaryColor,
-  },
-  selectTextStyle: {
-    textAlign: "left",
-    fontFamily: styles.fontFamilyReg,
-    paddingLeft: 23,
-    fontSize: 16,
-  },
 });

@@ -34,7 +34,7 @@ const Cardio = () => {
           Cardio
         </Text>
       </View>
-      <View style={{ backgroundColor: "white", padding: 35, marginBottom:15 }}>
+      <View style={{ backgroundColor: "white", padding: 33, marginBottom:15 }}>
         <Text style={{ fontSize: 25, fontFamily: styles.fontFamilySemiBold }}>
           Cardio Categories
         </Text>
