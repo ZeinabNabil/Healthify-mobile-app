@@ -16,4 +16,10 @@ export default StyleSheet.create({
     marginBottom: 20,
     borderRadius: 10,
   },
+  TrackText: {
+    fontSize: 17,
+    fontFamily: styles.fontFamilyReg,
+    marginBottom: 5,
+    color: "gray",
+  },
 });
