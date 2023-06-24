@@ -1,10 +1,11 @@
-import { ScrollView, Text, Pressable } from "react-native";
+import { ScrollView, Text, Pressable, Image } from "react-native";
 import { View } from "react-native";
 import style from "./NutrationStyle";
 import styles from "../../common/styles";
 import { Dimensions } from "react-native";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import Slider from "@react-native-community/slider";
+import * as Progress from "react-native-progress";
 
 const Nutration = () => {
   const w = Dimensions.get("window").width;
@@ -166,11 +167,215 @@ const Nutration = () => {
           </Text>
         </Pressable>
       </View>
-      <View style={{ ...style.Card, paddingVertical: 50 }}>
+      <View style={{ ...style.Card, paddingVertical: 60 }}>
         <Text style={{ textAlign: "center", color: "grey" }}>
           Calculate BMI First
         </Text>
       </View>
+      <View style={style.Card}>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: 5,
+          }}
+        >
+          <Text
+            style={{
+              ...style.CardText,
+              fontSize: 16,
+              fontFamily: styles.fontFamilySemiBold,
+              marginBottom: 20,
+              color: "grey",
+            }}
+          >
+            Day 1
+          </Text>
+          <Text
+            style={{
+              ...style.CardText,
+              fontSize: 16,
+              fontFamily: styles.fontFamilySemiBold,
+              color: "grey",
+              marginBottom: 20,
+            }}
+          >
+            24/10/2023
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              ...style.CardText,
+              fontSize: 20,
+              fontFamily: styles.fontFamilySemiBold,
+              marginBottom: 10,
+            }}
+          >
+            Breakfast
+          </Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={style.TrackText}>Beans</Text>
+            <Text style={style.TrackText}>100 g</Text>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={style.TrackText}>Egg</Text>
+            <Text style={style.TrackText}>2</Text>
+          </View>
+          <Text
+            style={{
+              backgroundColor: "#0066ff60",
+              textAlign: "center",
+              color: "white",
+              fontWeight: styles.fontFamilyBold,
+              fontSize: 18,
+              borderRadius: 20,
+              paddingVertical: 3,
+              marginVertical: 15,
+            }}
+          >
+            +
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              ...style.CardText,
+              fontSize: 20,
+              fontFamily: styles.fontFamilySemiBold,
+              marginBottom: 10,
+            }}
+          >
+            Lunch
+          </Text>
+          <Text
+            style={{
+              backgroundColor: "#0066ff60",
+              textAlign: "center",
+              color: "white",
+              fontWeight: styles.fontFamilyBold,
+              fontSize: 18,
+              borderRadius: 20,
+              paddingVertical: 3,
+              marginVertical: 15,
+            }}
+          >
+            +
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              ...style.CardText,
+              fontSize: 20,
+              fontFamily: styles.fontFamilySemiBold,
+              marginBottom: 10,
+            }}
+          >
+            Dinner
+          </Text>
+          <Text
+            style={{
+              backgroundColor: "#0066ff60",
+              textAlign: "center",
+              color: "white",
+              fontWeight: styles.fontFamilyBold,
+              fontSize: 18,
+              borderRadius: 20,
+              paddingVertical: 3,
+              marginVertical: 15,
+            }}
+          >
+            +
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              ...style.CardText,
+              fontSize: 20,
+              fontFamily: styles.fontFamilySemiBold,
+              marginBottom: 10,
+            }}
+          >
+            Snacks
+          </Text>
+          <Text
+            style={{
+              backgroundColor: "#0066ff60",
+              textAlign: "center",
+              color: "white",
+              fontWeight: styles.fontFamilyBold,
+              fontSize: 18,
+              borderRadius: 20,
+              paddingVertical: 3,
+              marginVertical: 15,
+            }}
+          >
+            +
+          </Text>
+        </View>
+      </View>
+      <View
+        style={{
+          ...style.Card,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: 30,
+        }}
+      >
+        <Text style={style.CardText}>Water</Text>
+        <Image source={require("../../../assets/Images/water.webp")}></Image>
+        <Text
+          style={{
+            ...style.TrackText,
+            marginBottom: 0,
+            marginTop: 20,
+            fontSize: 18,
+            fontWeight: styles.fontFamilyBold,
+          }}
+        >
+          0.4/4 L
+        </Text>
+        <Progress.Bar
+          style={{ marginVertical: 30 }}
+          progress={0.3}
+          width={w - 100}
+          borderWidth={0}
+          color={styles.mainColor}
+          height={10}
+        />
+        <Text
+          style={{
+            backgroundColor: "#0066ff60",
+            textAlign: "center",
+            color: "white",
+            fontWeight: styles.fontFamilyBold,
+            fontSize: 18,
+            borderRadius: 20,
+            paddingVertical: 3,
+            marginTop: 15,
+            width: w - 80,
+          }}
+        >
+          +
+        </Text>
+      </View>
+      <Text style={{ ...style.CardText }}>Recemonded Recipes</Text>
     </ScrollView>
   );
 };
