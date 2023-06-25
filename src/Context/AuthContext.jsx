@@ -13,9 +13,11 @@ import { collection, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
 import { storage } from "../../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+
   const [users, setUsers] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const [currentUserData, setCurrentUserData] = useState({});
@@ -112,6 +114,13 @@ const AuthProvider = ({ children }) => {
           gender: gender,
           email: email,
           password: password,
+          notification: {
+            exercise: false,
+            dailyMeditation: false,
+            fitnessGoals: false,
+            personalizedRecomendations: false,
+            weeklyBMI: false,
+          }
         });
       }
     );
@@ -151,8 +160,6 @@ const AuthProvider = ({ children }) => {
     currentUserData,
     getImage,
     userImage,
-    t,
-    i18n,
     googleSignIn,
     facebookSignIn,
   };
