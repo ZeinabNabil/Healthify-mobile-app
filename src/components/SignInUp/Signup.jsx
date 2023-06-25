@@ -18,7 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
 
 const Signup = ({ navigation }) => {
-  const gender = ["Male", "Female"];
+  const gender = ["male", "female"];
   const { navigate } = useNavigation();
   const [error, setError] = useState("");
   const { login, googleSignIn, facebookSignIn, currentUser, t, signup } =

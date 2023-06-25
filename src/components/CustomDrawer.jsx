@@ -13,7 +13,7 @@ import { useEffect } from "react";
 
 const CustomDrawer = (props) => {
     const {navigate} = useNavigation()
-    const { currentUserData, currentUser, logout } = useAuth();
+    const { currentUserData, currentUser, logout, userImage, } = useAuth();
     const [error, setError] = useState("");
     const [username, setUsername] = useState("");
 
@@ -40,8 +40,7 @@ const CustomDrawer = (props) => {
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props} contentContainerStyle={{backgroundColor:styles.mainColor}}>
                 {currentUser ? <View style={{padding:20}}>
-                    <Image source={require("../../assets/Images/userWhite.png")} style={{width:80, height:80, borderRadius:40, marginBottom:10}}></Image>
-                    {/* <Text style={{color:"white", fontSize:18, fontFamily:styles.fontFamilyReg}}>Welcome,</Text> */}
+                    <Image source={userImage?{uri: userImage} : require("../../assets/Images/userWhite.png")} style={{width:80, height:80, borderRadius:40, marginBottom:10}}></Image>
                     <Text style={{color:"white", fontSize:18, fontFamily:styles.fontFamilyReg}}>{username}</Text>
                 </View> : <View style={{padding:20}}>
                     <Image source={require("../../assets/Images/userWhite.png")} style={{width:80, height:80, borderRadius:40, marginBottom:10}}></Image>

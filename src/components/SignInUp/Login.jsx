@@ -25,7 +25,7 @@ const Login = ({ navigation }) => {
   } = useForm();
   const onSubmit = async (data) => {
     // console.log(data);
-    console.log(data);
+    // console.log(data);
     const { mail, password, remember } = data;
     setError("");
     try {
@@ -162,13 +162,18 @@ const Login = ({ navigation }) => {
           <View
             style={style.flexViewStyle}
           >
-            <Checkbox
-              // style={styles.checkbox}
-              // value={isChecked}
-              // onValueChange={setChecked}
-              // color={styles.mainColor}
+            <Controller
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Checkbox
+              value={value}
+              onValueChange={(v)=>onChange(v)}
+              color={styles.mainColor}
               style={{ height: 15, width: 15 }}
             />
+                )}
+                name="remember"
+              />
             <Text style={style.rememberMeText}>
               Remember me
             </Text>

@@ -6,7 +6,7 @@ export const getInstructors = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const { data } = await axios.get("http://192.168.1.17:3001/instructors");
+      const { data } = await axios.get("http://192.168.56.1:3001/instructors");
       // console.warn(data);
       return data;
     } catch (error) {
@@ -19,7 +19,7 @@ export const getTypes = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const { data } = await axios.get("http://192.168.1.17:3001/types");
+      const { data } = await axios.get("http://192.168.56.1:3001/types");
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
