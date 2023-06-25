@@ -13,6 +13,8 @@ import style from "./HomeScreenStyle";
 import styles from "../../common/styles";
 import HomeCard from "./HomeCard";
 import { TextInput } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import routes from "../../common/routes";
 
 const Home = () => {
   const features = [
@@ -43,6 +45,7 @@ const Home = () => {
   ];
   let ScreenHeight = Dimensions.get("window").height;
   const w = Dimensions.get("window").width;
+  const { navigate } = useNavigation();
   return (
     <ScrollView>
       <View
@@ -56,7 +59,12 @@ const Home = () => {
           <Text style={style.text}>
             Unlock Your Potential. Empowering Health and Wellness for All!
           </Text>
-          <Pressable style={style.btnStyle} onPress={() => {}}>
+          <Pressable
+            style={style.btnStyle}
+            onPress={() => {
+              // navigate(routes.login);
+            }}
+          >
             <Text style={style.btnText}>Start your Journey</Text>
           </Pressable>
         </View>

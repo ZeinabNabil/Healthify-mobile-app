@@ -13,13 +13,13 @@ import { ScrollView } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
-// import { useAuth } from "../../Context/AuthContext";
+import { useAuth } from "../../Context/AuthContext";
 
 const Signup = ({ navigation }) => {
   const gender = ["Male", "Female"];
   const [error, setError] = useState("");
-  // const { login, googleSignIn, facebookSignIn, currentUser, t, signup } =
-  //   useAuth();
+  const { login, googleSignIn, facebookSignIn, currentUser, t, signup } =
+    useAuth();
 
   const {
     control,
@@ -35,7 +35,6 @@ const Signup = ({ navigation }) => {
           <Text style={style.signInUpHeader}>Register</Text>
           <View style={style.signInUpHeaderUnderline}></View>
           <View>
-
             {/* First Name */}
             <View style={style.inputContainer}>
               <Controller
@@ -66,14 +65,12 @@ const Signup = ({ navigation }) => {
               />
             </View>
             {errors.firstName && (
-                <Text style={style.errorMsg}>
-                {errors.firstName.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.firstName.message}</Text>
             )}
 
             {/* Last Name */}
             <View style={style.inputContainer}>
-            <Controller
+              <Controller
                 control={control}
                 rules={{
                   required: "last name is required",
@@ -101,28 +98,26 @@ const Signup = ({ navigation }) => {
               />
             </View>
             {errors.lastName && (
-                <Text style={style.errorMsg}>
-                {errors.lastName.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.lastName.message}</Text>
             )}
 
             {/* Email */}
             <View style={style.inputContainer}>
-            <Controller
+              <Controller
                 control={control}
                 rules={{
                   required: "email is required",
                   pattern: {
                     value:
                       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/gi,
-                    message:"invalid email",
+                    message: "invalid email",
                   },
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
                     style={style.inputStyle}
                     placeholder="E-mail"
-                keyboardType="email-address"
+                    keyboardType="email-address"
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -138,14 +133,12 @@ const Signup = ({ navigation }) => {
               />
             </View>
             {errors.email && (
-                <Text style={style.errorMsg}>
-                {errors.email.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.email.message}</Text>
             )}
 
             {/* Phone number */}
             <View style={style.inputContainer}>
-            <Controller
+              <Controller
                 control={control}
                 rules={{
                   required: "phone number is required",
@@ -158,7 +151,7 @@ const Signup = ({ navigation }) => {
                   <TextInput
                     style={style.inputStyle}
                     placeholder="Phone"
-                keyboardType="phone-pad"
+                    keyboardType="phone-pad"
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -174,20 +167,18 @@ const Signup = ({ navigation }) => {
               />
             </View>
             {errors.phoneNumber && (
-                <Text style={style.errorMsg}>
-                {errors.phoneNumber.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.phoneNumber.message}</Text>
             )}
 
             {/* Gender */}
             <View style={style.inputContainer}>
-            <Controller
+              <Controller
                 control={control}
                 rules={{
                   required: "gender is required",
                 }}
                 render={({ field: { onChange, value } }) => (
-                    <SelectDropdown
+                  <SelectDropdown
                     data={gender}
                     buttonStyle={style.selectStyle}
                     buttonTextStyle={style.selectTextStyle}
@@ -255,14 +246,12 @@ const Signup = ({ navigation }) => {
               />
             </View>
             {errors.gender && (
-                <Text style={style.errorMsg}>
-                {errors.gender.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.gender.message}</Text>
             )}
 
             {/* Password */}
             <View style={style.inputContainer}>
-            <Controller
+              <Controller
                 control={control}
                 rules={{
                   required: "password is required",
@@ -302,9 +291,7 @@ const Signup = ({ navigation }) => {
               />
             </View>
             {errors.password && (
-                <Text style={style.errorMsg}>
-                {errors.password.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.password.message}</Text>
             )}
 
             {/* Sign up */}
