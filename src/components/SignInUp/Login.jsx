@@ -9,15 +9,51 @@ import routes from "../../common/routes";
 import { Image } from "react-native";
 import style from "./SignInUpStyle"
 import { useForm, Controller } from "react-hook-form";
+import { useAuth } from "../../Context/AuthContext";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Login = ({ navigation }) => {
+
+  const [error, setError] = useState("");
+  const { login, googleSignIn, facebookSignIn, currentUser } = useAuth();
   
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.warn(data);
+  const onSubmit = async (data) => {
+    // console.log(data);
+    console.log(data);
+    const { mail, password, remember } = data;
+    setError("");
+    try {
+      await login(mail, password);
+    } catch (error) {
+      setError("Incorrect email or password.");
+    }
+  };
+  const handleGoogleSignIn = () => {
+    try {
+      googleSignIn();
+    } catch (error) {
+      setError("unable to sign with Google.");
+    }
+  };
+  const handleFacebookSignIn = () => {
+    try {
+      facebookSignIn();
+    } catch (error) {
+      setError("unable to sign with Facebook.");
+    }
+  };
+  useEffect(() => {
+    if (currentUser != null) {
+      navigation.navigate(routes.home)
+    }
+    console.warn(currentUser);
+  });
 
   return (
     <View
@@ -56,7 +92,7 @@ const Login = ({ navigation }) => {
                     value={value}
                   />
                 )}
-                name="email"
+                name="mail"
               />
               <IonIcon
                 name="mail"
@@ -65,9 +101,9 @@ const Login = ({ navigation }) => {
                 style={style.inputIconStyle}
               />
             </View>
-            {errors.email && (
+            {errors.mail && (
                 <Text style={style.errorMsg}>
-                {errors.email.message}
+                {errors.mail.message}
               </Text>
             )}
           <View style={style.inputContainer}>
@@ -77,7 +113,7 @@ const Login = ({ navigation }) => {
                   required: "password is required",
                   pattern: {
                     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/gi,
-                    message: "at least 8 chars and numbers",
+                    message: "Check your password",
                   },
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
@@ -122,6 +158,7 @@ const Login = ({ navigation }) => {
               Forget Password?
             </Text>
           </Pressable>
+          
           <View
             style={style.flexViewStyle}
           >
@@ -146,6 +183,7 @@ const Login = ({ navigation }) => {
               Sign in
             </Text>
           </Pressable>
+          {error && <Text style={style.errorMsg}>{error}</Text>}
           <View
             style={style.flexViewStyle}
           >
@@ -172,13 +210,13 @@ const Login = ({ navigation }) => {
             <Text style={style.textFont}>
               Try to login with
             </Text>
-            <Pressable onPress={() => navigation.navigate(routes.signup)}>
+            <Pressable onPress={handleGoogleSignIn}>
               <Image source={require("../../../assets/Images/google.png")} style={style.googleImg}/>
             </Pressable>
             <Text style={style.textFont}>
               or
             </Text>
-            <Pressable onPress={() => navigation.navigate(routes.signup)}>
+            <Pressable onPress={handleFacebookSignIn}>
             <IonIcon
               name="logo-facebook"
               size={25}

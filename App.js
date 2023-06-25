@@ -10,6 +10,11 @@ import LoginNavigation from "./src/navigations/LoginNavigation";
 import LogoTitle from "./src/navigations/LogoTitle";
 import routes from "./src/common/routes";
 import SettingsNavigation from "./src/navigations/SettingsNavigation";
+import AuthProvider, { useAuth } from "./src/Context/AuthContext";
+import CustomDrawer from "./src/components/CustomDrawer";
+import IonIcon from "react-native-vector-icons/Ionicons";
+import styles from "./src/common/styles";
+import DrawerNavigation from "./src/navigations/DrawerNavigation";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,37 +27,15 @@ export default function App() {
 
   return (
     // <Provider store={store}>
-    <Provider store={store}>
-      <NavigationContainer>
-        {
-          fontsLoaded && (
-            <Drawer.Navigator>
-              <Drawer.Screen
-                options={{ headerShown: false }}
-                name={routes.homeBottomTab}
-                component={Root}
-              />
-              <Drawer.Screen
-                options={{
-                  headerShown: false,
-                  // headerTitle: () => <LogoTitle />,
-                }}
-                name={routes.loginDrawer}
-                component={LoginNavigation}
-              />
-              <Drawer.Screen
-                options={{
-                  // headerShown: false,
-                  headerTitle: () => <LogoTitle />,
-                }}
-                name={routes.settings}
-                component={SettingsNavigation}
-              />
-            </Drawer.Navigator>
-          )
-          // <Root></Root>
-        }
-      </NavigationContainer>
-    </Provider>
+    <AuthProvider>
+      <Provider store={store}>
+        <NavigationContainer>
+          {
+            fontsLoaded && <DrawerNavigation />
+            // <Root></Root>
+          }
+        </NavigationContainer>
+      </Provider>
+    </AuthProvider>
   );
 }

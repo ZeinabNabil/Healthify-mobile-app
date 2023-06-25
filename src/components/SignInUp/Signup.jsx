@@ -14,9 +14,12 @@ import SelectDropdown from "react-native-select-dropdown";
 import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
 import { useAuth } from "../../Context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
 
 const Signup = ({ navigation }) => {
   const gender = ["Male", "Female"];
+  const { navigate } = useNavigation();
   const [error, setError] = useState("");
   const { login, googleSignIn, facebookSignIn, currentUser, t, signup } =
     useAuth();
@@ -26,7 +29,31 @@ const Signup = ({ navigation }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.warn(data);
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    const { firstName, lastName, mail, phoneNumber, gender, password } = data;
+    await signup(firstName, lastName, phoneNumber, gender, mail, password);
+  };
+  const handleGoogleSignIn = () => {
+    try {
+      googleSignIn();
+    } catch (error) {
+      setError("unable to sign with Google.");
+    }
+  };
+  const handleFacebookSignIn = () => {
+    try {
+      facebookSignIn();
+    } catch (error) {
+      setError("unable to sign with Facebook.");
+    }
+  };
+  useEffect(() => {
+    if (currentUser != null) {
+      navigation.navigate(routes.home)
+    }
+  });
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -123,7 +150,7 @@ const Signup = ({ navigation }) => {
                     value={value}
                   />
                 )}
-                name="email"
+                name="mail"
               />
               <IonIcon
                 name="mail"
@@ -132,8 +159,8 @@ const Signup = ({ navigation }) => {
                 style={style.inputIconStyle}
               />
             </View>
-            {errors.email && (
-              <Text style={style.errorMsg}>{errors.email.message}</Text>
+            {errors.mail && (
+              <Text style={style.errorMsg}>{errors.mail.message}</Text>
             )}
 
             {/* Phone number */}
@@ -326,14 +353,14 @@ const Signup = ({ navigation }) => {
               }}
             >
               <Text style={style.textFont}>Try to login with</Text>
-              <Pressable onPress={() => navigation.navigate(routes.signup)}>
+              <Pressable onPress={handleGoogleSignIn}>
                 <Image
                   source={require("../../../assets/Images/google.png")}
                   style={style.googleImg}
                 />
               </Pressable>
               <Text style={style.textFont}>or</Text>
-              <Pressable onPress={() => navigation.navigate(routes.signup)}>
+              <Pressable onPress={handleFacebookSignIn}>
                 <IonIcon
                   name="logo-facebook"
                   size={25}
