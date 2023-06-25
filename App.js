@@ -15,6 +15,7 @@ import CustomDrawer from "./src/components/CustomDrawer";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import styles from "./src/common/styles";
 import DrawerNavigation from "./src/navigations/DrawerNavigation";
+import Healthify from "./Healthify";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,7 +32,7 @@ export default function App() {
       <Provider store={store}>
         <NavigationContainer>
           {
-            fontsLoaded && <DrawerNavigation />
+            fontsLoaded && <Healthify />
             // <Root></Root>
           }
         </NavigationContainer>

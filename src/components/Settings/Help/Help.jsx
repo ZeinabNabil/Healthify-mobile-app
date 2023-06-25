@@ -4,8 +4,10 @@ import { View } from "react-native";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import styles from "../../../common/styles";
 import uuid from "react-native-uuid";
+import { Pressable } from "react-native";
+import routes from "../../../common/routes";
 
-const Help = () => {
+const Help = ({navigation}) => {
   const questions = [
     "How do I get started with a fitness routine?",
     "What are some effective meditation techniques for beginners?",
@@ -19,12 +21,12 @@ const Help = () => {
     "What are some nutritious and convenient snack options for pre and post-workout?",
   ];
   return (
-    <FlatList showsVerticalScrollIndicator={false} data={questions} renderItem={({item})=>(<View
+    <FlatList showsVerticalScrollIndicator={false} data={questions} renderItem={({item, index})=>(<View
        key={uuid.v4()}
         style={{
           display: "flex",
           flex: 1,
-          flexDirection: "row",...styles.viewStyle
+          flexDirection: "row",...styles.viewStyle, marginRight:20
         }}
       >
         <IonIcon
@@ -32,6 +34,7 @@ const Help = () => {
           size={30}
           color={styles.mainColor}
         />
+        <Pressable onPress={()=>{navigation.navigate(routes.helpContent, {id:index+1})}}>
         <Text
           style={{
             marginLeft: 8,
@@ -42,6 +45,8 @@ const Help = () => {
         >
           {item}
         </Text>
+        </Pressable>
+        {/* <IonIcon name="open-outline" size={25}/> */}
       </View>)}></FlatList>
     // <View>
     //   <Text>Help</Text>

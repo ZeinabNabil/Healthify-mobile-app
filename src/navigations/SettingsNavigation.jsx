@@ -7,6 +7,7 @@ import routes from '../common/routes';
 import styles from "../common/styles";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import EditProfile from '../components/Settings/EditProfile/EditProfile';
+import HelpNavigation from './HelpNavigation';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -82,7 +83,9 @@ const SettingsNavigation = () => {
             iconName = focused ? "help-circle" : "help-circle-outline";
             return <IonIcon name={iconName} size={24} color={color} />;
           },
-        }} name={routes.help} component={Help} />
+        }} name={routes.helpNavigation} >
+          {()=><HelpNavigation />}
+        </Tab.Screen>
     </Tab.Navigator>
   );
 }

@@ -7,7 +7,7 @@ export const getWorkoutByID = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       const { data } = await axios.get(
-        `http://192.168.1.17:3001/exercises/${id}`
+        `http://192.168.56.1:3001/exercises/${id}`
       );
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const getAllWorkouts = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const { data } = await axios.get("http://192.168.1.17:3001/exercises");
+      const { data } = await axios.get("http://192.168.56.1:3001/exercises");
       return data;
     } catch (error) {
       return rejectWithValue(error.message);

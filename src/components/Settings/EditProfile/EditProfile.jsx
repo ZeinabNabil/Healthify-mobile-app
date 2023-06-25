@@ -9,26 +9,81 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native";
 import style from "./EditProfileStyle";
+import { useAuth } from "../../../Context/AuthContext";
+// firebase/storage
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { storage } from "../../../../firebase";
+import { useEffect } from "react";
+// firebase
+import { doc, updateDoc } from "firebase/firestore"
+import { db } from "../../../../firebase";
+// uuid
+import uuid from 'react-native-uuid';
+import ToastManager, { Toast } from "toastify-react-native";
+import { Dimensions } from "react-native";
+import Swal from "sweetalert2";
+import { useNavigation } from "@react-navigation/native";
+import routes from "../../../common/routes";
 
 
-const EditProfile = () => {
+const EditProfile = ({navigation}) => {
+  const { currentUserData } = useAuth();
+// const [currentUserImage, setCurrentUserImage] = useState("")
     const [image, setImage] = useState(null);
+    const [currentUserImage, setCurrentUserImage] = useState("");
+    const w = Dimensions.get("window").width;
+    const [msg, setMsg] = useState("");
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
     });
 
-    console.warn(result);
+    // console.warn(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      const imageRef = ref(storage, `usersImages/${currentUserData?.userId}`);
+      const metadata = {
+        contentType: 'image/jpeg',
+        firebaseStorageDownloadTokens: uuid.v4(),
+      };
+      uploadBytes(imageRef, image, metadata).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          setCurrentUserImage(url);
+          console.warn("🚀 ~ file: ProfileImage.jsx:24 ~ getDownloadURL ~ upladed:", url)
+        })
+      })
     }
   };
+
+  const getImageFromFirebase = (imageUrl) => {
+    getDownloadURL(ref(storage, imageUrl))
+      .then((url) => {
+        setCurrentUserImage(url);
+      })
+  }
+
+  useEffect(() => {
+    const userImageRef = ref(storage, `usersImages/${currentUserData?.userId}`);
+    if (userImageRef) {
+      getDownloadURL(userImageRef)
+        .then((url) => {
+          setCurrentUserImage(url);
+        })
+        .catch((error) => {
+          if (currentUserData?.gender === 'female') {
+            getImageFromFirebase(`usersImages/avatar-female.webp`);
+          } else {
+            getImageFromFirebase(`usersImages/avatar-male.webp`);
+          }
+        });
+    }
+  }, [currentUserData]);
 
   const {
     control,
@@ -36,15 +91,31 @@ const EditProfile = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      firstName: "Zeinab",
-      lastName: "Nabil",
-      email:"zeinab@gmail.com",
-      phoneNumber:"01111111111",
-      password:"zeinab1234"
+        firstName: currentUserData?.firstName,
+        lastName: currentUserData?.lastName,
+        mail: currentUserData?.email,
+        phoneNumber: currentUserData?.phoneNumber,
+        password: currentUserData?.password
     },
-  });
-  const onSubmit = (data) => console.warn(data);
+});
+const onSubmit = async (data) => {
+  console.log(data);
+  const { firstName, lastName, mail, phoneNumber, password } = data;
+  const newData = { firstName, lastName, mail, phoneNumber, password }
+  const userDoc = doc(db, "users", currentUserData?.userId)
+  await updateDoc(userDoc, newData);
+  Toast.success("Updated Successfully","top");
+  navigation.navigate(routes.home);
+  // Swal.fire({
+  //   icon: 'success',
+  //   title: 'Your work has been saved',
+  //   showConfirmButton: false,
+  //   timer: 1500
+  // })
+}
   return (
+    <>
+    <ToastManager width={w - 10} />
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.viewStyle}>
         {/* <View
@@ -67,7 +138,7 @@ const EditProfile = () => {
         </View> */}
         <View style={{padding: 20, display:"flex", justifyContent:"center", alignItems:"center"}}>
             <View style={{backgroundColor:"white", height:200, width:200, borderRadius:100}}>
-            {image? <Image source={{ uri: image }} style={{width:"100%", height:"100%", borderRadius:100}} /> : <Image style={{width:"100%", height:"100%", borderRadius:100}} source={require("../../../../assets/Images/user.png")}></Image>}
+{currentUserImage&&<Image source={{ uri: currentUserImage }} style={{width:"100%", height:"100%", borderRadius:100}} />}
                 
             </View>
             <Pressable onPress={pickImage} style={{backgroundColor:styles.mainColor, paddingHorizontal:20, paddingVertical:10, borderRadius:10, marginTop:15}}>
@@ -140,7 +211,7 @@ const EditProfile = () => {
                 <Text style={style.labelStyle}>Email:</Text>
                 <Controller
                 control={control}
-                name="email"
+                name="mail"
                 rules={{
                   required: "email is required",
                   pattern: {
@@ -161,9 +232,9 @@ const EditProfile = () => {
                 )}
               />
             </View>
-            {errors.email && (
+            {errors.mail && (
                 <Text style={style.errorMsg}>
-                {errors.email.message}
+                {errors.mail.message}
               </Text>
             )}
 
@@ -240,6 +311,7 @@ const EditProfile = () => {
         </View>
       </View>
     </ScrollView>
+    </>
   );
 };
 

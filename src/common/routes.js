@@ -19,6 +19,8 @@ const routes = Object.freeze({
   bmiTest: "BMI",
   languages: "Lang",
   help: "Help",
+  helpContent: "Help Content",
+  helpNavigation: "help",
 });
 
 export default routes;
