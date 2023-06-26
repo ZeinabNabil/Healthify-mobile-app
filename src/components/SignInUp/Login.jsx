@@ -52,7 +52,6 @@ const Login = ({ navigation }) => {
     if (currentUser != null) {
       navigation.navigate(routes.home)
     }
-    console.warn(currentUser);
   });
 
   return (

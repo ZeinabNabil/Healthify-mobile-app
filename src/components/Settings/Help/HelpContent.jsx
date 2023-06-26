@@ -29,7 +29,7 @@ import routes from "../../../common/routes";
     
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://192.168.56.1:3001/help/${params.id}`);
+          const response = await axios.get(`http://192.168.1.7:3001/help/${params.id}`);
           setData(response.data);
         } catch (error) {
           console.error("Error fetching data:", error);

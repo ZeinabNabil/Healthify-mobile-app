@@ -32,6 +32,10 @@ const LoginNavigation = () => {
                   // headerShown: false,
                   headerTitle: () => <LogoTitle />,
                 }} name={routes.signup} component={Signup}/>
+      {/* <Stack.Screen options={{
+                  // headerShown: false,
+                  headerTitle: () => <LogoTitle />,
+                }} name={routes.profile} component={Profile}/> */}
     </Stack.Navigator>
   );
 };

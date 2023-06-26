@@ -375,7 +375,6 @@ const Nutration = () => {
           +
         </Text>
       </View>
-      <Text style={{ ...style.CardText }}>Recemonded Recipes</Text>
     </ScrollView>
   );
 };

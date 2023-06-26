@@ -13,6 +13,7 @@ const routes = Object.freeze({
   loginDrawer: "Login",
   login: "login",
   signup: "Signup",
+  profile: "Profile",
   settings: "Settings",
   editProfile: "Edit",
   notifications: "Notific",
