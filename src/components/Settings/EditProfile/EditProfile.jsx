@@ -24,14 +24,17 @@ import { Dimensions } from "react-native";
 import Swal from "sweetalert2";
 import { useNavigation } from "@react-navigation/native";
 import routes from "../../../common/routes";
+import { useDispatch, useSelector } from "react-redux";
+import { getImage, putImage, putName } from "../../../redux/userSlice";
 
 const EditProfile = ({ navigation }) => {
   const { currentUserData } = useAuth();
-  // const [currentUserImage, setCurrentUserImage] = useState("")
-  const [image, setImage] = useState(null);
-  const [currentUserImage, setCurrentUserImage] = useState("");
-  const w = Dimensions.get("window").width;
-  const [msg, setMsg] = useState("");
+    const [image, setImage] = useState(null);
+    const [currentUserImage, setCurrentUserImage] = useState("");
+    const w = Dimensions.get("window").width;
+    const [msg, setMsg] = useState("");
+    const dispatch = useDispatch();
+    const { userImageRed } = useSelector((state) => state.user);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -46,6 +49,7 @@ const EditProfile = ({ navigation }) => {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      dispatch(putImage(result.assets[0].uri));
       const imageRef = ref(storage, `usersImages/${currentUserData?.userId}`);
       const metadata = {
         contentType: "image/jpeg",
@@ -53,9 +57,10 @@ const EditProfile = ({ navigation }) => {
       };
       uploadBytes(imageRef, image, metadata).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
-          setCurrentUserImage(url);
-        });
-      });
+          // setCurrentUserImage(url);
+          console.warn("🚀 ~ file: ProfileImage.jsx:24 ~ getDownloadURL ~ upladed:", url)
+        })
+      })
     }
   };
 
@@ -75,12 +80,17 @@ const EditProfile = ({ navigation }) => {
         .catch((error) => {
           if (currentUserData?.gender === "female") {
             getImageFromFirebase(`usersImages/avatar-female.webp`);
+
           } else {
             getImageFromFirebase(`usersImages/avatar-male.webp`);
           }
         });
     }
   }, [currentUserData]);
+
+  useEffect(()=>{
+    dispatch(getImage());
+  },[image])
 
   const {
     control,
@@ -94,22 +104,23 @@ const EditProfile = ({ navigation }) => {
       phoneNumber: currentUserData?.phoneNumber,
       password: currentUserData?.password,
     },
-  });
-  const onSubmit = async (data) => {
-    console.log(data);
-    const { firstName, lastName, mail, phoneNumber, password } = data;
-    const newData = { firstName, lastName, mail, phoneNumber, password };
-    const userDoc = doc(db, "users", currentUserData?.userId);
-    await updateDoc(userDoc, newData);
-    Toast.success("Updated Successfully", "top");
-    navigation.navigate(routes.home);
-    // Swal.fire({
-    //   icon: 'success',
-    //   title: 'Your work has been saved',
-    //   showConfirmButton: false,
-    //   timer: 1500
-    // })
-  };
+});
+const onSubmit = async (data) => {
+  console.log(data);
+  const { firstName, lastName, mail, phoneNumber, password } = data;
+  const newData = { firstName, lastName, mail, phoneNumber, password }
+  const userDoc = doc(db, "users", currentUserData?.userId)
+  await updateDoc(userDoc, newData);
+  dispatch(putName(`${firstName} ${lastName}`));
+  Toast.success("Updated Successfully","top");
+  navigation.navigate(routes.home);
+  // Swal.fire({
+  //   icon: 'success',
+  //   title: 'Your work has been saved',
+  //   showConfirmButton: false,
+  //   timer: 1500
+  // })
+}
   return (
     <>
       <ToastManager width={w - 10} />
@@ -133,28 +144,10 @@ const EditProfile = ({ navigation }) => {
             Edit profile
           </Text>
         </View> */}
-          <View
-            style={{
-              padding: 20,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: "white",
-                height: 200,
-                width: 200,
-                borderRadius: 100,
-              }}
-            >
-              {currentUserImage && (
-                <Image
-                  source={{ uri: currentUserImage }}
-                  style={{ width: "100%", height: "100%", borderRadius: 100 }}
-                />
-              )}
+        <View style={{padding: 20, display:"flex", justifyContent:"center", alignItems:"center"}}>
+            <View style={{backgroundColor:"white", height:200, width:200, borderRadius:100}}>
+{currentUserImage&&<Image source={{ uri: userImageRed? userImageRed : currentUserImage }} style={{width:"100%", height:"100%", borderRadius:100}} />}
+                
             </View>
             <Pressable
               onPress={pickImage}

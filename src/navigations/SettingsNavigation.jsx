@@ -56,7 +56,7 @@ const SettingsNavigation = () => {
             return <IonIcon name={iconName} size={24} color={color} />;
           },
         }} name={routes.bmiTest} component={BMITest} />
-      <Tab.Screen options={{
+      {/* <Tab.Screen options={{
           headerShown: false,
           tabBarActiveTintColor: styles.mainColor,
           tabBarInactiveTintColor: "grey",
@@ -69,7 +69,7 @@ const SettingsNavigation = () => {
             iconName = focused ? "language" : "language-outline";
             return <IonIcon name={iconName} size={24} color={color} />;
           },
-        }} name={routes.languages} component={Languages} />
+        }} name={routes.languages} component={Languages} /> */}
       <Tab.Screen options={{
           headerShown: false,
           tabBarActiveTintColor: styles.mainColor,
