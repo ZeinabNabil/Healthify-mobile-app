@@ -4,35 +4,34 @@ import { View } from "react-native";
 import styles from "../../../common/styles";
 import { Pressable } from "react-native";
 import { Image } from "react-native";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native";
 import style from "./EditProfileStyle";
 import { useAuth } from "../../../Context/AuthContext";
 // firebase/storage
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../../firebase";
 import { useEffect } from "react";
 // firebase
-import { doc, updateDoc } from "firebase/firestore"
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 // uuid
-import uuid from 'react-native-uuid';
+import uuid from "react-native-uuid";
 import ToastManager, { Toast } from "toastify-react-native";
 import { Dimensions } from "react-native";
 import Swal from "sweetalert2";
 import { useNavigation } from "@react-navigation/native";
 import routes from "../../../common/routes";
 
-
-const EditProfile = ({navigation}) => {
+const EditProfile = ({ navigation }) => {
   const { currentUserData } = useAuth();
-// const [currentUserImage, setCurrentUserImage] = useState("")
-    const [image, setImage] = useState(null);
-    const [currentUserImage, setCurrentUserImage] = useState("");
-    const w = Dimensions.get("window").width;
-    const [msg, setMsg] = useState("");
+  // const [currentUserImage, setCurrentUserImage] = useState("")
+  const [image, setImage] = useState(null);
+  const [currentUserImage, setCurrentUserImage] = useState("");
+  const w = Dimensions.get("window").width;
+  const [msg, setMsg] = useState("");
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -49,24 +48,22 @@ const EditProfile = ({navigation}) => {
       setImage(result.assets[0].uri);
       const imageRef = ref(storage, `usersImages/${currentUserData?.userId}`);
       const metadata = {
-        contentType: 'image/jpeg',
+        contentType: "image/jpeg",
         firebaseStorageDownloadTokens: uuid.v4(),
       };
       uploadBytes(imageRef, image, metadata).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
           setCurrentUserImage(url);
-          console.warn("🚀 ~ file: ProfileImage.jsx:24 ~ getDownloadURL ~ upladed:", url)
-        })
-      })
+        });
+      });
     }
   };
 
   const getImageFromFirebase = (imageUrl) => {
-    getDownloadURL(ref(storage, imageUrl))
-      .then((url) => {
-        setCurrentUserImage(url);
-      })
-  }
+    getDownloadURL(ref(storage, imageUrl)).then((url) => {
+      setCurrentUserImage(url);
+    });
+  };
 
   useEffect(() => {
     const userImageRef = ref(storage, `usersImages/${currentUserData?.userId}`);
@@ -76,7 +73,7 @@ const EditProfile = ({navigation}) => {
           setCurrentUserImage(url);
         })
         .catch((error) => {
-          if (currentUserData?.gender === 'female') {
+          if (currentUserData?.gender === "female") {
             getImageFromFirebase(`usersImages/avatar-female.webp`);
           } else {
             getImageFromFirebase(`usersImages/avatar-male.webp`);
@@ -91,34 +88,34 @@ const EditProfile = ({navigation}) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-        firstName: currentUserData?.firstName,
-        lastName: currentUserData?.lastName,
-        mail: currentUserData?.email,
-        phoneNumber: currentUserData?.phoneNumber,
-        password: currentUserData?.password
+      firstName: currentUserData?.firstName,
+      lastName: currentUserData?.lastName,
+      mail: currentUserData?.email,
+      phoneNumber: currentUserData?.phoneNumber,
+      password: currentUserData?.password,
     },
-});
-const onSubmit = async (data) => {
-  console.log(data);
-  const { firstName, lastName, mail, phoneNumber, password } = data;
-  const newData = { firstName, lastName, mail, phoneNumber, password }
-  const userDoc = doc(db, "users", currentUserData?.userId)
-  await updateDoc(userDoc, newData);
-  Toast.success("Updated Successfully","top");
-  navigation.navigate(routes.home);
-  // Swal.fire({
-  //   icon: 'success',
-  //   title: 'Your work has been saved',
-  //   showConfirmButton: false,
-  //   timer: 1500
-  // })
-}
+  });
+  const onSubmit = async (data) => {
+    console.log(data);
+    const { firstName, lastName, mail, phoneNumber, password } = data;
+    const newData = { firstName, lastName, mail, phoneNumber, password };
+    const userDoc = doc(db, "users", currentUserData?.userId);
+    await updateDoc(userDoc, newData);
+    Toast.success("Updated Successfully", "top");
+    navigation.navigate(routes.home);
+    // Swal.fire({
+    //   icon: 'success',
+    //   title: 'Your work has been saved',
+    //   showConfirmButton: false,
+    //   timer: 1500
+    // })
+  };
   return (
     <>
-    <ToastManager width={w - 10} />
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.viewStyle}>
-        {/* <View
+      <ToastManager width={w - 10} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.viewStyle}>
+          {/* <View
           style={{
             display: "flex",
             flexDirection: "row",
@@ -136,19 +133,54 @@ const onSubmit = async (data) => {
             Edit profile
           </Text>
         </View> */}
-        <View style={{padding: 20, display:"flex", justifyContent:"center", alignItems:"center"}}>
-            <View style={{backgroundColor:"white", height:200, width:200, borderRadius:100}}>
-{currentUserImage&&<Image source={{ uri: currentUserImage }} style={{width:"100%", height:"100%", borderRadius:100}} />}
-                
+          <View
+            style={{
+              padding: 20,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "white",
+                height: 200,
+                width: 200,
+                borderRadius: 100,
+              }}
+            >
+              {currentUserImage && (
+                <Image
+                  source={{ uri: currentUserImage }}
+                  style={{ width: "100%", height: "100%", borderRadius: 100 }}
+                />
+              )}
             </View>
-            <Pressable onPress={pickImage} style={{backgroundColor:styles.mainColor, paddingHorizontal:20, paddingVertical:10, borderRadius:10, marginTop:15}}>
-                <Text style={{color:"white", fontFamily:styles.fontFamilySemiBold, fontSize:15}}>Change photo</Text>
+            <Pressable
+              onPress={pickImage}
+              style={{
+                backgroundColor: styles.mainColor,
+                paddingHorizontal: 20,
+                paddingVertical: 10,
+                borderRadius: 10,
+                marginTop: 15,
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontFamily: styles.fontFamilySemiBold,
+                  fontSize: 15,
+                }}
+              >
+                Change photo
+              </Text>
             </Pressable>
-        </View>
-        <View>
+          </View>
+          <View>
             {/* First Name */}
             <View style={style.inputContainer}>
-                <Text style={style.labelStyle}>First Name:</Text>
+              <Text style={style.labelStyle}>First Name:</Text>
               <Controller
                 control={control}
                 name="firstName"
@@ -161,7 +193,7 @@ const onSubmit = async (data) => {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
-                    style={ style.inputStyle}
+                    style={style.inputStyle}
                     placeholder="Set First Name"
                     onBlur={onBlur}
                     onChangeText={onChange}
@@ -171,26 +203,24 @@ const onSubmit = async (data) => {
               />
             </View>
             {errors.firstName && (
-                <Text style={style.errorMsg}>
-                {errors.firstName.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.firstName.message}</Text>
             )}
-            
+
             {/* Last Name */}
             <View style={style.inputContainer}>
-                <Text style={style.labelStyle}>Last Name:</Text>
+              <Text style={style.labelStyle}>Last Name:</Text>
               <Controller
                 control={control}
                 name="lastName"
                 rules={{
-                    required: "last name is required",
-                    pattern: {
-                      value: /^[a-zA-Z]{3,}$/gi,
-                      message: "name must be at least 3 char.",
-                    },
-                  }}
+                  required: "last name is required",
+                  pattern: {
+                    value: /^[a-zA-Z]{3,}$/gi,
+                    message: "name must be at least 3 char.",
+                  },
+                }}
                 render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
+                  <TextInput
                     style={style.inputStyle}
                     placeholder="Set last Name"
                     onBlur={onBlur}
@@ -201,15 +231,13 @@ const onSubmit = async (data) => {
               />
             </View>
             {errors.lastName && (
-                <Text style={style.errorMsg}>
-                {errors.lastName.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.lastName.message}</Text>
             )}
 
             {/* Email */}
             <View style={style.inputContainer}>
-                <Text style={style.labelStyle}>Email:</Text>
-                <Controller
+              <Text style={style.labelStyle}>Email:</Text>
+              <Controller
                 control={control}
                 name="mail"
                 rules={{
@@ -217,14 +245,14 @@ const onSubmit = async (data) => {
                   pattern: {
                     value:
                       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/gi,
-                    message:"invalid email",
+                    message: "invalid email",
                   },
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
                     style={style.inputStyle}
                     placeholder="Set email"
-                keyboardType="email-address"
+                    keyboardType="email-address"
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -233,15 +261,13 @@ const onSubmit = async (data) => {
               />
             </View>
             {errors.mail && (
-                <Text style={style.errorMsg}>
-                {errors.mail.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.mail.message}</Text>
             )}
 
             {/* Phone */}
             <View style={style.inputContainer}>
-                <Text style={style.labelStyle}>Phone Number:</Text>
-                <Controller
+              <Text style={style.labelStyle}>Phone Number:</Text>
+              <Controller
                 control={control}
                 name="phoneNumber"
                 rules={{
@@ -255,7 +281,7 @@ const onSubmit = async (data) => {
                   <TextInput
                     style={style.inputStyle}
                     placeholder="Set new phone number"
-                keyboardType="phone-pad"
+                    keyboardType="phone-pad"
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -264,15 +290,13 @@ const onSubmit = async (data) => {
               />
             </View>
             {errors.phoneNumber && (
-                <Text style={style.errorMsg}>
-                {errors.phoneNumber.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.phoneNumber.message}</Text>
             )}
 
             {/* Password */}
             <View style={style.inputContainer}>
-                <Text style={style.labelStyle}>Password:</Text>
-                <Controller
+              <Text style={style.labelStyle}>Password:</Text>
+              <Controller
                 control={control}
                 name="password"
                 rules={{
@@ -296,9 +320,7 @@ const onSubmit = async (data) => {
               />
             </View>
             {errors.password && (
-                <Text style={style.errorMsg}>
-                {errors.password.message}
-              </Text>
+              <Text style={style.errorMsg}>{errors.password.message}</Text>
             )}
 
             {/* Sign up */}
@@ -308,9 +330,9 @@ const onSubmit = async (data) => {
             >
               <Text style={style.signInUpBtnText}>Save</Text>
             </Pressable>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
     </>
   );
 };

@@ -35,7 +35,7 @@ const MeditationDetails = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(`http://192.168.56.1:3001/articles/${params.id}`)
+        .get(`http://192.168.1.7:3001/articles/${params.id}`)
         .then(function (response) {
           setArtDetails(response.data);
         });
